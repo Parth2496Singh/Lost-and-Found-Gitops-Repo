@@ -15,7 +15,7 @@ argocd:
   projectName: "Lost-Found-Project"
   # Unifies the naming scheme across ApplicationSet and ImageUpdater.
   # Example: If appPrefix is "Lost-Found-Project", your apps will be named "Lost-Found-Project-backend".
-  appPrefix: "Lost-Found-Project"
+  appPrefix: "lost-found-project"
   # The GitHub repository URL where your platform code and Helm charts are stored.
   # Argo CD will continuously poll this repository for state changes.
   repoUrl: "https://github.com/Parth2496Singh/Lost-and-Found-Gitops-Repo.git"
@@ -26,9 +26,9 @@ argocd:
 notifications:
   email:
     # The email address Argo CD will use to send deployment alerts.
-    sender: "parthsinghkushwaha24@gmail.com@example.com"
+    sender: "parthsinghkushwaha24@gmail.com"
     # The email address that will receive the deployment alerts.
-    receiver: "parthsinghkushwaha24@gmail.com@example.com"
+    receiver: "parthsinghkushwaha24@gmail.com"
     # SMTP server configuration (Default is Gmail).
     host: "smtp.gmail.com"
     port: 465
