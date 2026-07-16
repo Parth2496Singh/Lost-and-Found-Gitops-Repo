@@ -15,7 +15,7 @@ common-microservice:
     # The exact AWS ECR repository URL for the microservice image.
     repository: 815090125753.dkr.ecr.us-east-1.amazonaws.com/lost-found/nginx
     # The specific Docker tag to deploy (Argo CD Image Updater will bump this automatically).
-    tag: v1.0.21
+    tag: v1.0.22
     # Tells Kubernetes whether to pull the image from ECR (IfNotPresent or Always).
     pullPolicy: IfNotPresent
 
