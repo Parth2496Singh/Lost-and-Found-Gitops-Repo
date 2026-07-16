@@ -1,0 +1,6 @@
+dependencies:
+- name: common-microservice
+  repository: oci://815090125753.dkr.ecr.us-east-1.amazonaws.com/universal-helm-chart
+  version: 1.0.4
+digest: sha256:64306d962d8860d598d3f5fdd693656ccb2105d2a31bcd8bb6b1ed88dbb251dd
+generated: "2026-07-16T23:56:46.400363365+05:30"
