@@ -12,7 +12,7 @@ cluster:
 
 argocd:
   # The Argo CD Project name under which all microservices will be grouped.
-  projectName: "Lost-Found-Project"
+  projectName: "lost-found-project"
   # Unifies the naming scheme across ApplicationSet and ImageUpdater.
   # Example: If appPrefix is "Lost-Found-Project", your apps will be named "Lost-Found-Project-backend".
   appPrefix: "lost-found-project"
