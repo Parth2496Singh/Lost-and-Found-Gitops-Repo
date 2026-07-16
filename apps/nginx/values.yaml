@@ -1,0 +1,86 @@
+common-microservice:
+  # ==========================================
+  # UNIVERSAL HELM CHART OVERRIDES
+  # ==========================================
+  # This file serves as the definitive reference template for your microservices.
+  # Because the core blueprint lives externally in AWS ECR, you configure your app here.
+
+  # Choose the core workload type: "Deployment", "StatefulSet", or "DaemonSet".
+  workloadType: "Deployment"
+
+  # Number of identical pods to run for high availability.
+  replicaCount: 2
+
+  image:
+    # The exact AWS ECR repository URL for the microservice image.
+    repository: 815090125753.dkr.ecr.us-east-1.amazonaws.com/lost-found/nginx
+    # The specific Docker tag to deploy (Argo CD Image Updater will bump this automatically).
+    tag: v1.0.16
+    # Tells Kubernetes whether to pull the image from ECR (IfNotPresent or Always).
+    pullPolicy: IfNotPresent
+
+  service:
+    # The Kubernetes Service type. 'ClusterIP' means it's only accessible internally.
+    type: ClusterIP
+    # The internal port that your application container is listening on.
+    port: 80
+
+  ingress:
+    # Set to true if you want this microservice to be publicly accessible via the internet.
+    enabled: true
+    # The Ingress Controller to use (AWS ALB is the standard here).
+    className: "alb"
+    # The specific domain name to route to this  app. Leave empty for dynamic/wildcard routing.
+    host: ""
+    # The URL path that should route to this app (e.g., "/" or "/api/v1/payments").
+    path: "/"
+
+  resources:
+    # The guaranteed amount of CPU/Memory reserved for the pod.
+    requests:
+      cpu: "100m"
+      memory: "150Mi"
+    # The absolute maximum CPU/Memory the pod is allowed to consume before being throttled/killed.
+    limits:
+      cpu: "200m"
+      memory: "256Mi"
+
+  # Environment Variables (ConfigMap)
+  # Automatically creates a ConfigMap and mounts it as environment variables.
+  # envConfig:
+  #   DATABASE_URL: "postgres://db:5432"
+  #   LOG_LEVEL: "debug"
+
+  # Secrets (Automatically creates a Secret)
+  # Mounts sensitive data securely as environment variables.
+  # secrets:
+  #   API_KEY: "super-secret-key"
+
+  # Prometheus Operator Metrics (ServiceMonitor)
+  # Automatically tells Prometheus to scrape this app for health metrics.
+  metrics:
+    enabled: true
+    port: "9113"      # Must match the named port in the Service
+    path: "/metrics"  # The endpoint where metrics are exposed
+    interval: "30s"   # How often Prometheus should scrape
+
+  # Extra Manifests Escape Hatch
+  # Allows you to inject any raw Kubernetes YAML (CronJobs, NetworkPolicies, etc.)
+  # extraManifests:
+  #   - apiVersion: batch/v1
+  #     kind: CronJob
+  #     ...
+  extraContainers:
+    - name: nginx-exporter
+      image: nginx/nginx-prometheus-exporter:1.1.0
+      args:
+        - -nginx.scrape-uri=http://127.0.0.1:80/nginx_status
+      ports:
+        - containerPort: 9113
+          name: nginx-metrics
+  extraPorts:
+    - name: metrics
+      port: 9113
+      targetPort: 9113
+      protocol: TCP
+
