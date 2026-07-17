@@ -37,7 +37,7 @@ registry:
   # The base URL of your AWS Elastic Container Registry (ECR).
   ecrBaseUrl: "815090125753.dkr.ecr.us-east-1.amazonaws.com"
   # The prefix used in ECR to group your Docker images.
-  repositoryPrefix: "Lost-Found-Project"
+  repositoryPrefix: "lost-found"
 
 imageUpdater:
   # The allowed SemVer strategy for automated image updates.
